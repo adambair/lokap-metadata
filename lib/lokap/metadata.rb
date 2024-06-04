@@ -8,11 +8,11 @@ module Lokap
     extend ActiveSupport::Concern
 
     included do
-      store :metadata, accessors: [:logs]
+      store_accessor :metadata, :logs
       after_initialize { self.logs ||= [] }
     end
 
-    def log_metadata(message, flush: true)
+    def log_metadata(message, flush: false)
       Rails.logger.info("Metadata Log: #{message}")
       ts_message = [Time.now.iso8601, message].join(': ')
       self.logs << ts_message
